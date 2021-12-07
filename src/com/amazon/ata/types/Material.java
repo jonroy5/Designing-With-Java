@@ -5,4 +5,5 @@ package com.amazon.ata.types;
  */
 public enum Material {
     CORRUGATE
+
 }
