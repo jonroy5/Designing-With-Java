@@ -44,29 +44,35 @@ class ShipmentServiceTest {
     }
 
     @Test
-    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOption() {
+    void findBestShipmentOption_existentFCAndItemCannotFit_returnsShipmentOptionWithNullPackaging() {
         // GIVEN & WHEN
         ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, existentFC);
+        ShipmentOption shipOption = ShipmentOption.builder()
+                .build();
+
 
         // THEN
-        assertNull(shipmentOption);
+        assertEquals(shipmentOption.getClass(), shipOption.getClass());
+        assertNull(shipmentOption.getPackaging());
     }
 
     @Test
-    void findBestShipmentOption_nonExistentFCAndItemCanFit_returnsShipmentOption() {
+    void findBestShipmentOption_nonExistentFCAndItemCanFit_throwsRuntimeException() {
         // GIVEN & WHEN
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, nonExistentFC);
+      //  ShipmentOption shipmentOption = shipmentService.findShipmentOption(smallItem, nonExistentFC);
+
 
         // THEN
-        assertNull(shipmentOption);
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(smallItem,nonExistentFC);
+        },"Uknown FC");
     }
 
     @Test
     void findBestShipmentOption_nonExistentFCAndItemCannotFit_returnsShipmentOption() {
         // GIVEN & WHEN
-        ShipmentOption shipmentOption = shipmentService.findShipmentOption(largeItem, nonExistentFC);
-
-        // THEN
-        assertNull(shipmentOption);
+        assertThrows(RuntimeException.class, () -> {
+            shipmentService.findShipmentOption(smallItem,nonExistentFC);
+        },"Uknown FC");
     }
 }

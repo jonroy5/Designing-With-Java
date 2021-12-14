@@ -4,6 +4,7 @@ import com.amazon.ata.types.Item;
 import com.amazon.ata.types.Packaging;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Box extends Packaging {
 
@@ -23,7 +24,7 @@ public class Box extends Packaging {
    private BigDecimal height;
 
     public Box(Material material, BigDecimal length, BigDecimal width, BigDecimal height) {
-        super(material,length,width,height);
+        super(material);
         this.length = length;
         this.width = width;
         this.height = height;
@@ -32,21 +33,50 @@ public class Box extends Packaging {
 
     @Override
     public boolean canFitItem(Item item) {
-        return super.canFitItem(item);
+        return this.length.compareTo(item.getLength()) > 0 &&
+                this.width.compareTo(item.getWidth()) > 0 &&
+                this.height.compareTo(item.getHeight()) > 0;
     }
 
     @Override
     public BigDecimal getMass() {
-        return super.getMass();
+        BigDecimal two = BigDecimal.valueOf(2);
+
+        // For simplicity, we ignore overlapping flaps
+        BigDecimal endsArea = length.multiply(width).multiply(two);
+        BigDecimal shortSidesArea = length.multiply(height).multiply(two);
+        BigDecimal longSidesArea = width.multiply(height).multiply(two);
+
+        return endsArea.add(shortSidesArea).add(longSidesArea);
+    }
+
+    public BigDecimal getLength() {
+        return length;
+    }
+
+    public BigDecimal getWidth() {
+        return width;
+    }
+
+    public BigDecimal getHeight() {
+        return height;
     }
 
     @Override
     public boolean equals(Object o) {
-        return super.equals(o);
+
+        if (!(o instanceof Box)) {
+            return false;
+        }
+        return super.equals(o)
+                && this.getLength().equals(((Box) o).getLength())
+                && this.getHeight().equals(((Box) o).getHeight())
+                && this.getWidth().equals(((Box) o).getWidth());
+
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return Objects.hash(getHeight(), getLength(), getWidth(), super.hashCode());
     }
 }
