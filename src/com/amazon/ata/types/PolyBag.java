@@ -27,7 +27,7 @@ public class PolyBag extends Packaging {
     @Override
     public boolean canFitItem(Item item) {
         BigDecimal itemVolume = item.getHeight().multiply(item.getLength().multiply(item.getWidth()));
-        return (itemVolume.doubleValue() <= volume.doubleValue());
+        return itemVolume.doubleValue() <= volume.doubleValue();
     }
 
     @Override
