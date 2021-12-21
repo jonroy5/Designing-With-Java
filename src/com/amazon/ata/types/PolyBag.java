@@ -33,7 +33,7 @@ public class PolyBag extends Packaging {
     @Override
     public BigDecimal getMass() {
 
-        return BigDecimal.valueOf(Math.ceil(Math.sqrt(volume.doubleValue() * 0.6));
+        return BigDecimal.valueOf(Math.ceil(Math.sqrt(volume.doubleValue()) * 0.6));
     }
 
     @Override
