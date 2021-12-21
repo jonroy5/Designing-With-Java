@@ -1,8 +1,5 @@
 package com.amazon.ata.types;
 
-import com.amazon.ata.types.Item;
-import com.amazon.ata.types.Packaging;
-
 import java.math.BigDecimal;
 import java.util.Objects;
 

@@ -26,18 +26,14 @@ public class PackagingDAO {
      */
     public PackagingDAO(PackagingDatastore datastore) {
         this.fcpMap =  new HashMap<FulfillmentCenter, Set<FcPackagingOption>>();
-        for(FcPackagingOption fcpoption : datastore.getFcPackagingOptions()) {
+        for (FcPackagingOption fcpoption : datastore.getFcPackagingOptions()) {
             Set<FcPackagingOption> fcpSet = new HashSet<>();
 
            if (fcpMap.containsKey(fcpoption.getFulfillmentCenter())) {
                fcpSet = fcpMap.get(fcpoption.getFulfillmentCenter());
-               fcpSet.add(fcpoption);
-               fcpMap.put(fcpoption.getFulfillmentCenter(),fcpSet);
            }
-           else {
-               fcpSet.add(fcpoption);
-               fcpMap.put(fcpoption.getFulfillmentCenter(), fcpSet);
-           }
+            fcpSet.add(fcpoption);
+            fcpMap.put(fcpoption.getFulfillmentCenter(), fcpSet);
         }
     }
 
